@@ -10,7 +10,6 @@
         <version>0.7.2-SNAPSHOT</version>
     </parent>
 
-
     <dependencies>
 
         <dependency>
@@ -32,41 +31,28 @@
         </dependency>
 
         <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_${scala.binary.version}</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-
-        <dependency>
             <groupId>org.aksw.bsbm</groupId>
             <artifactId>bsbm-core</artifactId>
-            <scope>test</scope>
         </dependency>
-
 
         <dependency>
             <groupId>com.typesafe.scala-logging</groupId>
             <artifactId>scala-logging_${scala.binary.version}</artifactId>
-            <version>3.5.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${scala.binary.version}</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.calcite</groupId>
             <artifactId>calcite-core</artifactId>
-            <version>1.13.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -76,7 +62,6 @@
             <version>3.3.1</version>
             <scope>runtime</scope>
         </dependency>
-
 
     </dependencies>
 

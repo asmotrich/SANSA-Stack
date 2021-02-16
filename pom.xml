@@ -41,10 +41,6 @@
         <system>GitHub</system>
     </issueManagement>
 
-    <prerequisites>
-        <maven>3.1</maven>
-    </prerequisites>
-
     <properties>
         <maven.version>3.1</maven.version>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -53,7 +49,7 @@
 
         <java.version>1.8</java.version>
 
-        <scala.version>2.12.11</scala.version>
+        <scala.version>2.12.10</scala.version>
         <scala.binary.version>2.12</scala.binary.version>
         <scala.classifier>${scala.binary.version}</scala.classifier>
         <scala.version.suffix>_${scala.binary.version}</scala.version.suffix>
@@ -63,8 +59,8 @@
         <!-- Spark Testing isn't always in sync, so we have to check for latest version and adapt here -->
         <spark.testing.version>3.0.1_1.0.0</spark.testing.version>
 
-        <!--<hadoop.version>3.2.1</hadoop.version>-->
-        <hadoop.version>2.8.5</hadoop.version>
+        <hadoop.version>3.2.1</hadoop.version>
+<!--        <hadoop.version>2.8.5</hadoop.version>-->
         <hadoop.common.version>${hadoop.version}</hadoop.common.version>
 
         <jena.version>3.17.0</jena.version>
@@ -119,15 +115,6 @@
         <module>sansa-debian-spark-cli</module>
         <module>sansa-bench-spark</module>
     </modules>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_${scala.binary.version}</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
 
     <dependencyManagement>
@@ -1291,7 +1278,7 @@
             </plugin>
 
             <plugin>
-                <groupId>org.aksw.maven.plugin</groupId>
+                <groupId>com.amashchenko.maven.plugin</groupId>
                 <artifactId>gitflow-maven-plugin</artifactId>
             </plugin>
 
@@ -1485,9 +1472,9 @@
 
                 <!-- Gitflow -->
                 <plugin>
-                    <groupId>org.aksw.maven.plugin</groupId>
+                    <groupId>com.amashchenko.maven.plugin</groupId>
                     <artifactId>gitflow-maven-plugin</artifactId>
-                    <version>1.12.1</version>
+                    <version>1.15.0</version>
                     <configuration>
                         <!--
                             <installProject>false</installProject>
@@ -1742,6 +1729,12 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-pmd-plugin</artifactId>
                     <version>3.13.0</version>
                     <configuration>
@@ -1807,7 +1800,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore></ignore>
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -1849,29 +1842,37 @@
 
     <distributionManagement>
         <repository>
-            <id>maven.aksw.internal</id>
-            <name>AKSW Release Repository</name>
-            <url>https://maven.aksw.org/archiva/repository/internal</url>
+            <id>gitlab-maven</id>
+            <url>https://gitlab.com/api/v4/projects/22742784/packages/maven</url>
         </repository>
         <snapshotRepository>
-            <id>maven.aksw.snapshots</id>
-            <name>AKSW Snapshot Repository</name>
-            <url>https://maven.aksw.org/archiva/repository/snapshots</url>
+            <id>gitlab-maven</id>
+            <url>https://gitlab.com/api/v4/projects/22742784/packages/maven</url>
         </snapshotRepository>
     </distributionManagement>
 
     <pluginRepositories>
-        <pluginRepository>
-            <id>maven.aksw.internal</id>
-            <name>AKSW Release Repository</name>
-            <url>https://maven.aksw.org/archiva/repository/internal</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
+<!--        <pluginRepository>-->
+<!--            <id>maven.aksw.internal</id>-->
+<!--            <name>AKSW Release Repository</name>-->
+<!--            <url>https://maven.aksw.org/archiva/repository/internal</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--        </pluginRepository>-->
     </pluginRepositories>
 
     <repositories>
+        <repository>
+            <id>gitlab-maven</id>
+            <url>https://gitlab.com/api/v4/projects/22742784/packages/maven</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
         <repository>
             <id>oss-sonatype</id>
             <name>oss-sonatype</name>
@@ -1911,6 +1912,7 @@
             <url>https://maven.aksw.org/archiva/repository/snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
             </snapshots>
             <releases>
                 <enabled>false</enabled>
@@ -1927,11 +1929,11 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
-        <repository>
-            <id>netbeans</id>
-            <name>mvnrepository</name>
-            <url>https://bits.netbeans.org/nexus/content/groups/netbeans/</url>
-        </repository>
+<!--        <repository>-->
+<!--            <id>netbeans</id>-->
+<!--            <name>mvnrepository</name>-->
+<!--            <url>https://bits.netbeans.org/nexus/content/groups/netbeans/</url>-->
+<!--        </repository>-->
     </repositories>
 
     <profiles>
@@ -1939,6 +1941,9 @@
         <!-- switch Scala version to 2.12 -->
         <profile>
             <id>scala-2.12</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <scala.version>2.12.10</scala.version>
                 <scala.binary.version>2.12</scala.binary.version>
@@ -1956,9 +1961,13 @@
             <id>release</id>
             <distributionManagement>
                 <repository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                    <id>gitlab-maven</id>
+                    <url>https://gitlab.com/api/v4/projects/22742784/packages/maven</url>
                 </repository>
+                <snapshotRepository>
+                    <id>gitlab-maven</id>
+                    <url>https://gitlab.com/api/v4/projects/22742784/packages/maven</url>
+                </snapshotRepository>
             </distributionManagement>
             <build>
                 <plugins>
@@ -2068,6 +2077,9 @@
 
         <profile>
             <id>spark-3</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <spark.version>3.0.1</spark.version>
             </properties>
@@ -2075,6 +2087,9 @@
 
         <profile>
             <id>hadoop-3.2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <hadoop.version>3.2.1</hadoop.version>
             </properties>
@@ -2082,6 +2097,9 @@
 
         <profile>
             <id>hadoop-2.8</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <!-- Default hadoop profile. Uses global properties. -->
         </profile>
 
