@@ -1865,11 +1865,13 @@
     <distributionManagement>
         <repository>
             <id>gitlab-maven</id>
-            <url>https://gitlab.com/api/v4/projects/22742784/packages/maven</url>
+<!--            <url>https://gitlab.com/api/v4/projects/24489688/packages/maven</url>-->
+            <url>${env.CI_SERVER_URL}/api/v4/projects/${env.CI_PROJECT_ID}/packages/maven</url>
         </repository>
         <snapshotRepository>
             <id>gitlab-maven</id>
-            <url>https://gitlab.com/api/v4/projects/22742784/packages/maven</url>
+<!--            <url>https://gitlab.com/api/v4/projects/24489688/packages/maven</url>-->
+            <url>${env.CI_SERVER_URL}/api/v4/projects/${env.CI_PROJECT_ID}/packages/maven</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -1887,7 +1889,7 @@
     <repositories>
         <repository>
             <id>gitlab-maven</id>
-            <url>https://gitlab.com/api/v4/projects/22742784/packages/maven</url>
+            <url>https://gitlab.com/api/v4/projects/24489688/packages/maven</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
